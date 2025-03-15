@@ -75,6 +75,7 @@ Temporary Items
 /.idea/*
 
 # Exclude non-user-specific stuff
+.idea
 !.idea/.name
 !.idea/codeInsightSettings.xml
 !.idea/codeStyles/
