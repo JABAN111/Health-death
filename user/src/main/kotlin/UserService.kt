@@ -1,14 +1,15 @@
 package mobile.train
 
 import com.google.protobuf.Empty
-import mobile.train.grpc.PingResponse
-import mobile.train.grpc.TrainServiceGrpcKt
+import mobile.user.grpc.PingResponse
+import mobile.user.grpc.UserServiceGrpcKt
 
-class TrainService : TrainServiceGrpcKt.TrainServiceCoroutineImplBase() {
 
+class TrainService : UserServiceGrpcKt.UserServiceCoroutineImplBase() {
     override suspend fun ping(request: Empty): PingResponse {
         return PingResponse.newBuilder()
             .setMessage("Pong")
             .build()
     }
 }
+
