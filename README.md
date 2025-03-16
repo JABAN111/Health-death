@@ -45,6 +45,7 @@ NB: на текущий момент докеры и docker compose запуще
 
 ## Отметка директории, как модуля(для IntelliJ IDEA)
 Если idea не отмечает директорию как микросервис, то есть нет синей пометочки возле директории(как на фото)
+<img width="540" alt="Снимок экрана 2025-03-16 в 13 56 10" src="https://github.com/user-attachments/assets/60b57768-45d0-4b8f-987a-ffe0dd7f7b6a" />
 
 То необходимо зайти в директорию и прилинковать gradle к idea
-![Снимок экрана 2025-03-16 в 13.57.03.png](../../../../../../var/folders/xv/slvr_rgd0t99dlbj0bdgpmq00000gn/T/TemporaryItems/NSIRD_screencaptureui_bVa7lc/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-03-16%20%D0%B2%2013.57.03.png)
+<img width="1142" alt="Снимок экрана 2025-03-16 в 13 57 13" src="https://github.com/user-attachments/assets/e701c8e3-dcea-4d1c-a9f6-52eec063497e" />
