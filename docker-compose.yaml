@@ -28,14 +28,14 @@ services:
     networks:
       - app-network
 
-#  schedule: not finished
-#    build:
-#      context: ./schedule
-#      dockerfile: Dockerfile
-#    ports:
-#      - "23220:23220"
-#    networks:
-#      - app-network
+  schedule:
+    build:
+      context: ./schedule
+      dockerfile: Dockerfile
+    ports:
+      - "23220:23220"
+    networks:
+      - app-network
 
   train:
     build:
