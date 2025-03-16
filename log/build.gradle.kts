@@ -1,12 +1,27 @@
 plugins {
     kotlin("jvm") version "1.8.20"
     id("com.google.protobuf") version "0.9.4"
-
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     application
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("mobile.log.MainKt")
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "mobile.log.MainKt"
+    }
+}
+tasks {
+    shadowJar {
+        archiveBaseName.set("user")
+        archiveClassifier.set("")
+        manifest {
+            attributes["Main-Class"] = "mobile.train.MainKt"
+        }
+    }
 }
 
 repositories {

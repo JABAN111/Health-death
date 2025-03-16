@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  authorization:
+    build:
+      context: ./authorization
+      dockerfile: Dockerfile
+    ports:
+      - "23210:23210"
+    networks:
+      - app-network
+
+  diary:
+    build:
+      context: ./diary
+      dockerfile: Dockerfile
+    ports:
+      - "23214:23214"
+    networks:
+      - app-network
+
+  log:
+    build:
+      context: ./log
+      dockerfile: Dockerfile
+    ports:
+      - "23211:23211"
+    networks:
+      - app-network
+
+#  schedule: not finished
+#    build:
+#      context: ./schedule
+#      dockerfile: Dockerfile
+#    ports:
+#      - "23220:23220"
+#    networks:
+#      - app-network
+
+  train:
+    build:
+      context: ./train
+      dockerfile: Dockerfile
+    ports:
+      - "23212:23212"
+    networks:
+      - app-network
+
+  user:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+    ports:
+      - "23213:23213"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
