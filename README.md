@@ -27,6 +27,18 @@ make run-train
 docker compose up -d
 ```
 
+# Протыкивание ручек без gateway
+Для протыкивания ручек без gateway можно использовать [grpcurl](https://github.com/fullstorydev/grpcurl) или [grpcui](https://github.com/fullstorydev/grpcui)
+grpcurl
+```shell
+grpcurl -plaintext localhost:23210 list 
+grpcurl -plaintext -d {} localhost:23210 search.Authorization/Ping
+```
+grpcui
+```shell
+grpcui -plaintext localhost:23210
+```
+
 NB: на текущий момент докеры и docker compose запущен минимально для демонстрации работы
 необходимо перенастроить и добавить возможность парсить конфиг через ENV у докера
 
