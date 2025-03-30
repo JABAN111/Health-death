@@ -1,10 +1,7 @@
-version: "3.8"
-
 services:
   authorization:
     build:
-      context: ./authorization
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.authorization
     ports:
       - "23210:23210"
     networks:
@@ -12,8 +9,7 @@ services:
 
   diary:
     build:
-      context: ./diary
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.diary
     ports:
       - "23214:23214"
     networks:
@@ -21,8 +17,7 @@ services:
 
   log:
     build:
-      context: ./log
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.log
     ports:
       - "23211:23211"
     networks:
@@ -30,8 +25,7 @@ services:
 
   schedule:
     build:
-      context: ./schedule
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.schedule
     ports:
       - "23220:23220"
     networks:
@@ -39,8 +33,7 @@ services:
 
   train:
     build:
-      context: ./train
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.train
     ports:
       - "23212:23212"
     networks:
@@ -48,8 +41,7 @@ services:
 
   user:
     build:
-      context: ./user
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.user
     ports:
       - "23213:23213"
     networks:

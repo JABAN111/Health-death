@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package search;
+
+import "google/protobuf/empty.proto";
+
+option java_package = "mobile.user.grpc";
+option java_multiple_files = true;
+
+message PingResponse {
+  string message = 1;
+}
+
+
+// Service
+service UserService {
+  rpc Ping(google.protobuf.Empty) returns (PingResponse) {}
+  rpc Test(PingResponse) returns (PingResponse) {}
+}

@@ -14,15 +14,16 @@ tasks.jar {
     }
 }
 tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.train.MainKt"
-        }
+    distZip {
+        dependsOn(shadowJar)
+    }
+    distTar {
+        dependsOn(shadowJar)
+    }
+    startScripts {
+        dependsOn(shadowJar)
     }
 }
-
 
 repositories {
     mavenCentral()
@@ -40,6 +41,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
 }
+
 
 protobuf {
     protoc {
@@ -61,6 +63,14 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/user"))
         }
     }
 }

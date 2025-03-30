@@ -1,0 +1,6 @@
+ktor:
+    application:
+        modules:
+            - mobile.ApplicationKt.module
+    deployment:
+        port: 8080

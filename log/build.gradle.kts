@@ -15,12 +15,14 @@ tasks.jar {
     }
 }
 tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.train.MainKt"
-        }
+    distZip {
+        dependsOn(shadowJar)
+    }
+    distTar {
+        dependsOn(shadowJar)
+    }
+    startScripts {
+        dependsOn(shadowJar)
     }
 }
 
@@ -61,6 +63,13 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/log"))
         }
     }
 }

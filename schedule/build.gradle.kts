@@ -15,12 +15,14 @@ tasks.jar {
     }
 }
 tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.schedule.MainKt"
-        }
+    distZip {
+        dependsOn(shadowJar)
+    }
+    distTar {
+        dependsOn(shadowJar)
+    }
+    startScripts {
+        dependsOn(shadowJar)
     }
 }
 
@@ -64,3 +66,12 @@ protobuf {
         }
     }
 }
+
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/schedule"))
+        }
+    }
+}
+
