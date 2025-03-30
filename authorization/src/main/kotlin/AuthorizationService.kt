@@ -7,8 +7,8 @@ import mobile.auth.grpc.*
 
 class AuthorizationService : AuthorizationGrpcKt.AuthorizationCoroutineImplBase() {
 
-    override suspend fun ping(request: Empty): PingResponse {
-        return PingResponse.newBuilder()
+    override suspend fun ping(request: Empty): AuthPingResponse {
+        return AuthPingResponse.newBuilder()
             .setMessage("Pong")
             .build()
     }

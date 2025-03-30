@@ -1,9 +1,25 @@
 services:
+  gateway:
+    build:
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "23200:8080"
+    environment:
+      API_ADDRESS: "0.0.0.0:8080"
+      HTTP_SERVER_TIMEOUT: "20000"
+      DIARY_ADDRESS: "diary:8080"
+      AUTHORIZATION_ADDRESS: "authorization:8080"
+      LOG_ADDRESS: "log:8080"
+      SCHEDULE_ADDRESS: "schedule:8080"
+      TRAIN_ADDRESS: "train:8080"
+      USER_ADDRESS: "user:8080"
+
+
   authorization:
     build:
       dockerfile: Dockerfile.authorization
     ports:
-      - "23210:23210"
+      - "23210:8080"
     networks:
       - app-network
 
@@ -11,7 +27,7 @@ services:
     build:
       dockerfile: Dockerfile.diary
     ports:
-      - "23214:23214"
+      - "23214:8080"
     networks:
       - app-network
 
@@ -19,7 +35,7 @@ services:
     build:
       dockerfile: Dockerfile.log
     ports:
-      - "23211:23211"
+      - "23211:8080"
     networks:
       - app-network
 
@@ -27,7 +43,7 @@ services:
     build:
       dockerfile: Dockerfile.schedule
     ports:
-      - "23220:23220"
+      - "23220:8080"
     networks:
       - app-network
 
@@ -35,7 +51,7 @@ services:
     build:
       dockerfile: Dockerfile.train
     ports:
-      - "23212:23212"
+      - "23212:8080"
     networks:
       - app-network
 
@@ -43,7 +59,7 @@ services:
     build:
       dockerfile: Dockerfile.user
     ports:
-      - "23213:23213"
+      - "23213:8080"
     networks:
       - app-network
 

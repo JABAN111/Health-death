@@ -1,6 +1,22 @@
 ktor:
+    development: true
     application:
         modules:
             - mobile.ApplicationKt.module
     deployment:
-        port: 8080
+        port: 8082
+
+
+services:
+    diary:
+        url: "http://diary:8080"
+    authorization:
+        url: "http://authorization:8080"
+    log:
+        url: "http://log:8080"
+    schedule:
+        url: "http://schedule:8080"
+    train:
+        url: "http://train:8080"
+    user:
+        url: "http://user:8080"
