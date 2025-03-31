@@ -1,13 +1,13 @@
 FROM gradle:8.0-jdk17 AS build
 
-RUN apt update && apt install -y protobuf-compiler
+#RUN apt update && apt install -y protobuf-compiler
 
 WORKDIR /app
 
 COPY ./gateway /app/service
 COPY /proto  /app/proto
 
-RUN cd service && ./gradlew generateProto
+# RUN cd service && ./gradlew generateProto
 RUN cd service && ./gradlew clean shadowJar
 
 FROM openjdk:17-jdk-slim AS runner
@@ -16,6 +16,6 @@ WORKDIR /run
 
 COPY --from=build /app/service/build/libs/*.jar /run/app.jar
 
-EXPOSE 23213
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/run/app.jar"]

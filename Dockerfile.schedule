@@ -16,6 +16,6 @@ WORKDIR /run
 
 COPY --from=build /app/service/build/libs/*.jar /run/app.jar
 
-EXPOSE 23213
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/run/app.jar"]

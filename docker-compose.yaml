@@ -6,63 +6,62 @@ services:
       - "23200:8080"
     environment:
       API_ADDRESS: "0.0.0.0:8080"
-      HTTP_SERVER_TIMEOUT: "20000"
-      DIARY_ADDRESS: "diary:8080"
-      AUTHORIZATION_ADDRESS: "authorization:8080"
-      LOG_ADDRESS: "log:8080"
-      SCHEDULE_ADDRESS: "schedule:8080"
-      TRAIN_ADDRESS: "train:8080"
-      USER_ADDRESS: "user:8080"
-
+      DIARY_ADDRESS: "diary"
+      AUTHORIZATION_ADDRESS: "authorization"
+      LOG_ADDRESS: "log"
+      SCHEDULE_ADDRESS: "schedule"
+      TRAIN_ADDRESS: "train"
+      USER_ADDRESS: "user"
+      DIARY_PORT: "8080"
+      AUTHORIZATION_PORT: "8080"
+      LOG_PORT: "8080"
+      SCHEDULE_PORT: "8080"
+      TRAIN_PORT: "8080"
+      USER_PORT: "8080"
 
   authorization:
     build:
       dockerfile: Dockerfile.authorization
     ports:
       - "23210:8080"
-    networks:
-      - app-network
+    environment:
+      AUTHORIZATION_PORT: 8080
 
   diary:
     build:
       dockerfile: Dockerfile.diary
     ports:
       - "23214:8080"
-    networks:
-      - app-network
+    environment:
+      DIARY_PORT: 8080
 
   log:
     build:
       dockerfile: Dockerfile.log
     ports:
       - "23211:8080"
-    networks:
-      - app-network
+    environment:
+      LOG_PORT: 8080
 
   schedule:
     build:
       dockerfile: Dockerfile.schedule
     ports:
       - "23220:8080"
-    networks:
-      - app-network
+    environment:
+      SCHEDULE_PORT: 8080
 
   train:
     build:
       dockerfile: Dockerfile.train
     ports:
       - "23212:8080"
-    networks:
-      - app-network
-
+    environment:
+      TRAIN_PORT: 8080
   user:
     build:
       dockerfile: Dockerfile.user
     ports:
       - "23213:8080"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+    environment:
+      USER_PORT: 8080
