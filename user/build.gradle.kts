@@ -8,21 +8,21 @@ plugins {
 application {
     mainClass.set("mobile.train.MainKt")
 }
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
-        attributes["Main-Class"] = "mobile.train.MainKt"
+        attributes["Main-Class"] = "mobile.user.MainKt"
     }
 }
-tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.train.MainKt"
-        }
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
 }
-
+tasks.jar {
+    enabled = false
+}
 
 repositories {
     mavenCentral()
@@ -40,6 +40,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
 }
+
 
 protobuf {
     protoc {
@@ -61,6 +62,14 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/user"))
         }
     }
 }

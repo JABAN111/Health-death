@@ -9,21 +9,21 @@ application {
     mainClass.set("mobile.schedule.MainKt")
 }
 
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
         attributes["Main-Class"] = "mobile.schedule.MainKt"
     }
 }
-tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.schedule.MainKt"
-        }
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
 }
-
+tasks.jar {
+    enabled = false
+}
 repositories {
     mavenCentral()
 }
@@ -64,3 +64,12 @@ protobuf {
         }
     }
 }
+
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/schedule"))
+        }
+    }
+}
+

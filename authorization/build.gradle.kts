@@ -9,19 +9,20 @@ application {
     mainClass.set("mobile.auth.MainKt")
 }
 
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
-        attributes["Main-Class"] = "mobile.auth.MainKt"
+        attributes["Main-Class"] = "mobile.authorization.MainKt"
     }
 }
-tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.auth.MainKt"
-        }
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
+}
+tasks.jar {
+    enabled = false
 }
 
 repositories {
@@ -61,6 +62,13 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/authorization"))
         }
     }
 }

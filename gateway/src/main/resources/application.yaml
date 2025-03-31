@@ -1,0 +1,28 @@
+ktor:
+    development: true
+    application:
+        modules:
+            - mobile.ApplicationKt.module
+    deployment:
+        port: 8080
+
+
+services:
+    diary:
+        host: "localhost"
+        port: 23214
+    authorization:
+        host: "localhost"
+        port: 23210
+    log:
+        host: "localhost"
+        port: 23211
+    schedule:
+        host: "localhost"
+        port: 23220
+    train:
+        host: "localhost"
+        port: 23212
+    user:
+        host: "localhost"
+        port: 23213

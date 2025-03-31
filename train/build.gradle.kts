@@ -9,20 +9,22 @@ application {
     mainClass.set("mobile.train.MainKt")
 }
 
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
         attributes["Main-Class"] = "mobile.train.MainKt"
     }
 }
-tasks {
-    shadowJar {
-        archiveBaseName.set("user")
-        archiveClassifier.set("")
-        manifest {
-            attributes["Main-Class"] = "mobile.train.MainKt"
-        }
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
 }
+tasks.jar {
+    enabled = false
+}
+
 
 repositories {
     mavenCentral()
@@ -61,6 +63,14 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            setSrcDirs(listOf("../proto/train"))
         }
     }
 }

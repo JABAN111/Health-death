@@ -1,60 +1,67 @@
-version: "3.8"
-
 services:
+  gateway:
+    build:
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "23200:8080"
+    environment:
+      API_ADDRESS: "0.0.0.0:8080"
+      DIARY_ADDRESS: "diary"
+      AUTHORIZATION_ADDRESS: "authorization"
+      LOG_ADDRESS: "log"
+      SCHEDULE_ADDRESS: "schedule"
+      TRAIN_ADDRESS: "train"
+      USER_ADDRESS: "user"
+      DIARY_PORT: "8080"
+      AUTHORIZATION_PORT: "8080"
+      LOG_PORT: "8080"
+      SCHEDULE_PORT: "8080"
+      TRAIN_PORT: "8080"
+      USER_PORT: "8080"
+
   authorization:
     build:
-      context: ./authorization
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.authorization
     ports:
-      - "23210:23210"
-    networks:
-      - app-network
+      - "23210:8080"
+    environment:
+      AUTHORIZATION_PORT: 8080
 
   diary:
     build:
-      context: ./diary
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.diary
     ports:
-      - "23214:23214"
-    networks:
-      - app-network
+      - "23214:8080"
+    environment:
+      DIARY_PORT: 8080
 
   log:
     build:
-      context: ./log
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.log
     ports:
-      - "23211:23211"
-    networks:
-      - app-network
+      - "23211:8080"
+    environment:
+      LOG_PORT: 8080
 
   schedule:
     build:
-      context: ./schedule
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.schedule
     ports:
-      - "23220:23220"
-    networks:
-      - app-network
+      - "23220:8080"
+    environment:
+      SCHEDULE_PORT: 8080
 
   train:
     build:
-      context: ./train
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.train
     ports:
-      - "23212:23212"
-    networks:
-      - app-network
-
+      - "23212:8080"
+    environment:
+      TRAIN_PORT: 8080
   user:
     build:
-      context: ./user
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.user
     ports:
-      - "23213:23213"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - "23213:8080"
+    environment:
+      USER_PORT: 8080
