@@ -21,7 +21,7 @@ source set_env.sh
 ```
 
 ```shell
-./gladlew runAll
+./gradlew runAll
 ```
 
 Важно, все процессы запускаются в фоне, поэтому для отслеживания используйте
