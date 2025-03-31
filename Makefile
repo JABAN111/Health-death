@@ -1,3 +1,5 @@
+# Deprecated
+# NO USE ANY MAKEFILE
 run-user:
 	$(MAKE) -C ./user run
 run-diary:
