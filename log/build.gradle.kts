@@ -9,21 +9,20 @@ application {
     mainClass.set("mobile.log.MainKt")
 }
 
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
         attributes["Main-Class"] = "mobile.log.MainKt"
     }
 }
-tasks {
-    distZip {
-        dependsOn(shadowJar)
-    }
-    distTar {
-        dependsOn(shadowJar)
-    }
-    startScripts {
-        dependsOn(shadowJar)
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
+}
+tasks.jar {
+    enabled = false
 }
 
 repositories {

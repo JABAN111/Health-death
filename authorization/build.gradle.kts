@@ -9,21 +9,20 @@ application {
     mainClass.set("mobile.auth.MainKt")
 }
 
-tasks.jar {
+tasks.shadowJar {
+    archiveBaseName.set("app")
+    archiveClassifier.set("")
+    archiveVersion.set("")
+    mergeServiceFiles()
     manifest {
-        attributes["Main-Class"] = "mobile.auth.MainKt"
+        attributes["Main-Class"] = "mobile.authorization.MainKt"
     }
 }
-tasks {
-    distZip {
-        dependsOn(shadowJar)
-    }
-    distTar {
-        dependsOn(shadowJar)
-    }
-    startScripts {
-        dependsOn(shadowJar)
-    }
+tasks.named("compileKotlin") {
+    dependsOn("generateProto")
+}
+tasks.jar {
+    enabled = false
 }
 
 repositories {

@@ -1,0 +1,2 @@
+rootProject.name = 'health-death'
+include 'authorization', 'gateway', 'diary', 'log', 'schedule', 'train', 'user'
