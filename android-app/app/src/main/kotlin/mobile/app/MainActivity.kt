@@ -7,17 +7,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import mobile.app.ui.theme.HealthdeathTheme
 import androidx.navigation.compose.composable
-import mobile.app.auth.LoginScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +23,21 @@ class MainActivity : ComponentActivity() {
         setContent {
             HealthdeathTheme {
                 val navController = rememberNavController()
+                val viewModel = viewModel<MainViewModel>()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(
                         modifier = Modifier.padding(innerPadding),
-                        startDestination = NavigationDestinations.Login.name,
+                        startDestination = if (viewModel.isAuthenticated) Screen.Onboarding.route else Screen.Welcome.route,
                         navController = navController,
                     ) {
-
+                        composable(Screen.Welcome.route) {
+                            WelcomeScreen(onContinueClicked = {
+                                navController.navigateSingleTopTo(
+                                    Screen.Register.route
+                                )
+                            })
+                        }
                     }
                 }
             }
