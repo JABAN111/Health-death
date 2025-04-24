@@ -12,9 +12,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import mobile.app.ui.theme.HealthdeathTheme
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import mobile.app.auth.RegisterScreen
+import mobile.app.ui.theme.HealthdeathTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,12 @@ class MainActivity : ComponentActivity() {
                                     Screen.Register.route
                                 )
                             })
+                        }
+
+                        composable(Screen.Register.route) {
+                            RegisterScreen(
+                                onRegisterClicked = {},
+                                onExistingAccountClicked = { navController.navigateSingleTopTo(Screen.Login.route) })
                         }
                     }
                 }
