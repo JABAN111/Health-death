@@ -1,3 +1,5 @@
+val ktor_version = "3.1.2"
+
 plugins {
     kotlin("jvm") version "2.1.0"
     id("io.ktor.plugin") version "3.1.2"
@@ -38,19 +40,22 @@ tasks.jar {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:3.1.2")
-    implementation("io.ktor:ktor-server-content-negotiation:3.1.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
-    implementation("io.ktor:ktor-server-status-pages:3.1.2")
-    implementation("io.ktor:ktor-server-swagger:3.1.2")
-    implementation("io.ktor:ktor-server-netty:3.1.2")
-    implementation("io.ktor:ktor-server-config-yaml:3.1.2")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
+
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation("io.ktor:ktor-server-config-yaml:$ktor_version")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("ch.qos.logback:logback-classic:1.4.12")
 
-    testImplementation("io.ktor:ktor-server-test-host:3.1.2")
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.20")
 
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
