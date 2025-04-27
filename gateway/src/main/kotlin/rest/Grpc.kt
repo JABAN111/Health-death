@@ -1,9 +1,8 @@
-package mobile
+package mobile.rest
 
 import grpc.*
 import io.ktor.server.application.*
-
-lateinit var authClient: AuthService
+//TODO: сделать просто возвращаемым куском
 lateinit var diaryClient: DiaryService
 lateinit var logClient: LogService
 lateinit var scheduleClient: ScheduleService
@@ -21,9 +20,6 @@ lateinit var userClient: UserService
  *
  */
 fun Application.configureGrpcClients() {
-    val authHost = System.getenv("AUTHORIZATION_ADDRESS") ?: environment.config.propertyOrNull("services.authorization.host")?.getString() ?: "authorization"
-    val authPort = System.getenv("AUTHORIZATION_PORT")?.toInt() ?: environment.config.propertyOrNull("services.authorization.port")?.getString()?.toInt() ?: 8080
-
     val diaryHost = System.getenv("DIARY_ADDRESS") ?: environment.config.propertyOrNull("services.diary.host")?.getString() ?: "diary"
     val diaryPort = System.getenv("DIARY_PORT")?.toInt() ?: environment.config.propertyOrNull("services.diary.port")?.getString()?.toInt() ?: 8080
 
@@ -39,7 +35,6 @@ fun Application.configureGrpcClients() {
     val userHost = System.getenv("USER_ADDRESS") ?: environment.config.propertyOrNull("services.user.host")?.getString() ?: "user"
     val userPort = System.getenv("USER_PORT")?.toInt() ?: environment.config.propertyOrNull("services.user.port")?.getString()?.toInt() ?: 8080
 
-    authClient = GrpcServiceSimpleFactory.createService(GrpcServiceType.AUTH, authHost, authPort) as AuthService
     diaryClient = GrpcServiceSimpleFactory.createService(GrpcServiceType.DIARY, diaryHost, diaryPort) as DiaryService
     logClient = GrpcServiceSimpleFactory.createService(GrpcServiceType.LOG, logHost, logPort) as LogService
     scheduleClient = GrpcServiceSimpleFactory.createService(GrpcServiceType.SCHEDULE, scheduleHost, schedulePort) as ScheduleService

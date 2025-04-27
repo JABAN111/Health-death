@@ -2,6 +2,7 @@ val ktor_version = "3.1.2"
 
 plugins {
     kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "1.5.0"
     id("io.ktor.plugin") version "3.1.2"
     id("com.gradleup.shadow") version "8.3.6"
     id("com.google.protobuf") version "0.9.4"
@@ -54,6 +55,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
     implementation("ch.qos.logback:logback-classic:1.4.12")
+    implementation("org.mindrot:jbcrypt:0.4")
 
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.20")
