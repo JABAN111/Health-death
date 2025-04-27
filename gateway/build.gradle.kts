@@ -1,12 +1,10 @@
-//val ktor_version: String by project
-//val kotlin_version: String by project
-//val logback_version: String by project
-//val log4j_version: String by project
+val ktor_version = "3.1.2"
 
 plugins {
-    kotlin("jvm") version "1.8.20"
-    id("io.ktor.plugin") version "2.2.3"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "1.5.0"
+    id("io.ktor.plugin") version "3.1.2"
+    id("com.gradleup.shadow") version "8.3.6"
     id("com.google.protobuf") version "0.9.4"
     application
 }
@@ -43,30 +41,35 @@ tasks.jar {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core:2.x.x")
-    implementation("io.ktor:ktor-server-content-negotiation:2.x.x")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.x.x")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-    implementation("io.ktor:ktor-server-status-pages:2.3.4")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
 
-    implementation("io.ktor:ktor-features:1.6.8")
-    implementation("io.ktor:ktor-server-swagger:2.2.3")
-    implementation("io.ktor:ktor-server-netty:2.2.3")
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation("io.ktor:ktor-server-config-yaml:$ktor_version")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
     implementation("ch.qos.logback:logback-classic:1.4.12")
-    implementation("io.ktor:ktor-server-config-yaml:2.2.3")
-    testImplementation("io.ktor:ktor-server-test-host:2.2.3")
+    implementation("org.mindrot:jbcrypt:0.4")
+
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.8.20")
 
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
     implementation("io.grpc:grpc-protobuf:1.71.0")
     implementation("io.grpc:grpc-stub:1.71.0")
     implementation("io.grpc:grpc-services:1.71.0")
-
     runtimeOnly("io.grpc:grpc-netty-shaded:1.71.0")
 
     implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
 }
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.21.12"

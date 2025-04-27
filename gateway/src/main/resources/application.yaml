@@ -6,7 +6,11 @@ ktor:
     deployment:
         port: 8080
 
-
+jwt:
+    secret: "secret"
+    issuer: "gateway"
+    audience: "aud"
+    realm: "death"
 services:
     diary:
         host: "localhost"
