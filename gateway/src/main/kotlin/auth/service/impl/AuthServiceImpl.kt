@@ -30,11 +30,9 @@ class AuthServiceImpl(
     }
 
     override fun signIn(userDto: UserDto): JwtResponse {
-        val user = try {
-            userService.get(userDto.email)
-        } catch (e: NullPointerException) {
-            throw UserNotExistException("Пользователь с email: '${userDto.email}' не найден")
-        }
+        val user = userService.get(userDto.email)
+            ?: throw UserNotExistException("Пользователь с email: '${userDto.email}' не найден")
+
 
         if (!BCrypt.checkpw(userDto.password, user.password)) {
             log.warn("User with email {} entered invalid password", user.email)

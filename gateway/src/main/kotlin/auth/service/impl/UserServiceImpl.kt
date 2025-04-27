@@ -15,7 +15,7 @@ class UserServiceImpl(
     }
 
     override fun get(email: String): UserDto {
-        val user = userRepository.get(email) ?: throw NullPointerException()
+        val user = userRepository.get(email)
         return UserMapper.toDto(user)
     }
 }

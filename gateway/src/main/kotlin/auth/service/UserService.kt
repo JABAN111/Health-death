@@ -4,5 +4,5 @@ import mobile.auth.dto.UserDto
 
 interface UserService {
     fun save(userDto: UserDto): UserDto
-    fun get(email: String): UserDto
+    fun get(email: String): UserDto?
 }

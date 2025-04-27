@@ -12,8 +12,8 @@ class UserMapper {
             return user
         }
 
-        fun toDto(user: User): UserDto {
-            return UserDto(user.email, user.password)
+        fun toDto(user: User?): UserDto {
+            return UserDto(user!!.email, user.password)
         }
     }
 }
