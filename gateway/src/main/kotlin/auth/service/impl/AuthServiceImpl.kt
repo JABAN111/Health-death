@@ -23,7 +23,7 @@ class AuthServiceImpl(
 
     override fun signUp(userDto: UserDto): JwtResponse {
         val hashedPwd = hashPwd(userDto.password)
-        val userToSave = UserDto(userDto.email, hashedPwd)
+        val userToSave = userDto.copy(password = hashedPwd)
 
         val savedUser = userService.save(userToSave)
         return generateJwtResponse(savedUser.email)
