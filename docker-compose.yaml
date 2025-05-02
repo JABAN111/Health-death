@@ -57,3 +57,24 @@ services:
       - "23213:8080"
     environment:
       USER_PORT: 8080
+  keydb:
+#    TODO у keydb какое-то конченное версионирование, но надо бы уточнить версию тут
+    image: eqalpha/keydb:latest
+    container_name: keydb
+    restart: always
+    ports:
+      - "6379:6379"
+    command: keydb-server /etc/keydb/keydb.conf --appendonly yes
+    healthcheck:
+      test: [ "CMD", "keydb-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  redis-cli:
+    image: redis:8.0-rc1
+    container_name: redis-cli
+    depends_on:
+      - keydb
+    entrypoint: [ "tail", "-f", "/dev/null" ]
+    networks:
+      - default
