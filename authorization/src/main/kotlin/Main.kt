@@ -1,0 +1,35 @@
+package mobile.auth
+
+import io.grpc.Server
+import io.grpc.ServerBuilder
+import com.google.protobuf.Empty
+import io.grpc.protobuf.services.ProtoReflectionServiceV1
+import kotlinx.coroutines.runBlocking
+import kotlin.system.exitProcess
+
+
+fun main() {
+    val portEnv = System.getenv("AUTHORIZATION_PORT")
+    if (portEnv.isNullOrEmpty()) {
+        println("Port is required")
+        exitProcess(1)
+    }
+    val port = portEnv.toInt()
+
+    val server: Server = ServerBuilder
+        .forPort(port)
+        .addService(AuthorizationService())
+        .addService(ProtoReflectionServiceV1.newInstance())
+        .build()
+        .start()
+
+    println("Server started on port $port")
+    Runtime.getRuntime().addShutdownHook(Thread {
+        println("Shutting down server...")
+        server.shutdown()
+    })
+
+    runBlocking {
+      server.awaitTermination()
+    }
+}
