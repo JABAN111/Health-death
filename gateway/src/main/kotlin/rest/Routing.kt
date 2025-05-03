@@ -2,6 +2,7 @@ package mobile.rest
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.logger.Logger
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -23,7 +24,8 @@ fun Application.configureRouting(
     issuer: String,
     audience: String,
     myRealm: String,
-    authService: AuthService
+    authService: AuthService,
+    kdbLogger: Logger
 ) {
 
     install(ContentNegotiation) {
@@ -118,6 +120,8 @@ fun Application.configureRouting(
                 pingResults.add("Schedule Service: $schedulePing")
                 pingResults.add("Train Service: $trainPing")
                 pingResults.add("User Service: $userPing")
+
+                kdbLogger.info("pinged: $pingResults")
 
                 call.respond(HttpStatusCode.OK, mapOf("pingResults" to pingResults))
             }
