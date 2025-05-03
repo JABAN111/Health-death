@@ -11,7 +11,6 @@ class Logger private constructor(
     companion object {
         private var logger: Logger? = null
 
-        // TODO возможно надо будет обновить дефолтные знач в пользу keydb:8080 -> подстроиться под докер
         fun getLogger(host: String = "localhost", port: Int = 6379): Logger {
             return logger ?: Logger(Jedis(host, port)).also { logger = it }
         }

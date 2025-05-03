@@ -6,7 +6,7 @@ plugins {
 }
 
 application {
-    mainClass.set("mobile.log.MainKt")
+    mainClass.set("MainKt")
 }
 
 tasks.shadowJar {
@@ -15,7 +15,7 @@ tasks.shadowJar {
     archiveVersion.set("")
     mergeServiceFiles()
     manifest {
-        attributes["Main-Class"] = "mobile.log.MainKt"
+        attributes["Main-Class"] = "MainKt"
     }
 }
 tasks.named("compileKotlin") {

@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "2.1.0"
     id("com.google.protobuf") version "0.9.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     application
@@ -31,6 +31,8 @@ repositories {
 }
 
 dependencies {
+    implementation(files("../logger-lib/build/libs/loglib-1.jar"))
+
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
     implementation("io.grpc:grpc-protobuf:1.71.0")
 

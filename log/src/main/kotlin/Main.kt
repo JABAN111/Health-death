@@ -1,5 +1,4 @@
 import com.logger.LogType
-import com.logger.Logger
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.protobuf.services.ProtoReflectionServiceV1
@@ -8,8 +7,29 @@ import kotlin.system.exitProcess
 
 
 fun main() {
+    val portEnv = System.getenv("LOG_PORT")
+    if (portEnv.isNullOrEmpty()) {
+        println("Port is required")
+        exitProcess(1)
+    }
+
+    val keyDbHostEnv = System.getenv("KEYDB_HOST")
+    val keyDbPortEnv = System.getenv("KEYDB_PORT")
+
+    if (keyDbHostEnv.isNullOrEmpty()) {
+        println("KEYDB_HOST env is required")
+        exitProcess(1)
+    }
+
+    if (keyDbPortEnv.isNullOrEmpty()) {
+        println("KEYDB_PORT env is required")
+        exitProcess(1)
+    }
+
+    val keyDbPort = keyDbPortEnv.toInt()
+
     for (type in LogType.entries) {
-        val subscriber = RedisSubscriber(channel = type.channelName)
+        val subscriber = RedisSubscriber(channel = type.channelName, host = keyDbHostEnv, port = keyDbPort)
 
         val threadName = "redis-subscriber-${type.channelName}"
         Thread(subscriber, threadName).apply {
@@ -20,12 +40,7 @@ fun main() {
         println("Started subscriber for channel='${type.channelName}' on thread='$threadName'")
     }
 
-    // FIXME
-    val portEnv = "8080"//System.getenv("LOG_PORT")
-    if (portEnv.isNullOrEmpty()) {
-        println("Port is required")
-        exitProcess(1)
-    }
+
     val port = portEnv.toInt()
 
     val server: Server = ServerBuilder
