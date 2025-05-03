@@ -1,14 +1,16 @@
-FROM gradle:8.0-jdk17 AS build
+FROM gradle:8.4-jdk17 AS build
 
 WORKDIR /app
 
 COPY logger-lib /app/logger-lib
+# TODO Очень оооочоень долго идет билд этой либы почему-то. Возможно хочется ее вынести отсюда каким-то образом,
+#    ибо она в каждом контейнере лежит
 RUN cd /app/logger-lib && gradle build -x test
 
 COPY ./gateway /app/service
 COPY /proto  /app/proto
 
-RUN cd service && ./gradlew shadowJar
+RUN cd service && gradle shadowJar
 
 FROM openjdk:17-jdk-slim AS runner
 

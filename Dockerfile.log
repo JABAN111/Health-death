@@ -1,4 +1,4 @@
-FROM gradle:8.0-jdk17 AS build
+FROM gradle:8.4-jdk17 AS build
 
 
 WORKDIR /app
@@ -7,7 +7,7 @@ RUN cd /app/logger-lib && gradle build -x test
 COPY ./log /app/service
 COPY /proto  /app/proto
 
-RUN cd service && ./gradlew shadowJar
+RUN cd service && gradle shadowJar
 
 FROM openjdk:17-jdk-slim AS runner
 

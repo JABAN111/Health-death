@@ -41,6 +41,8 @@ tasks.jar {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/redis.clients/jedis
+    implementation("redis.clients:jedis:5.2.0")
     implementation(files("../logger-lib/build/libs/loglib-1.jar"))
 
     implementation("io.ktor:ktor-server-auth:$ktor_version")
