@@ -1,8 +1,14 @@
 import com.logger.LogType
+import grpc.LogService
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.protobuf.services.ProtoReflectionServiceV1
 import kotlinx.coroutines.runBlocking
+import logger.RedisSubscriber
+import logger.repository.LoggerRepository
+import logger.repository.LoggerRepositoryImpl
+import logger.service.LoggerService
+import logger.service.LoggerServiceImpl
 import kotlin.system.exitProcess
 
 
@@ -28,8 +34,16 @@ fun main() {
 
     val keyDbPort = keyDbPortEnv.toInt()
 
+    val loggerRepository: LoggerRepository = LoggerRepositoryImpl()
+    val loggerService: LoggerService = LoggerServiceImpl(loggerRepository)
+
     for (type in LogType.entries) {
-        val subscriber = RedisSubscriber(channel = type.channelName, host = keyDbHostEnv, port = keyDbPort)
+        val subscriber = RedisSubscriber(
+            channel = type.channelName,
+            host = keyDbHostEnv,
+            port = keyDbPort,
+            loggerService = loggerService
+        )
 
         val threadName = "redis-subscriber-${type.channelName}"
         Thread(subscriber, threadName).apply {

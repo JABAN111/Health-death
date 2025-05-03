@@ -1,3 +1,5 @@
+package grpc
+
 import com.google.protobuf.Empty
 import mobile.log.grpc.LogPingResponse
 import mobile.log.grpc.LogRequest

@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.1.0"
     id("com.google.protobuf") version "0.9.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    kotlin("plugin.serialization") version "1.4.21"
     application
 }
 
@@ -34,6 +35,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/redis.clients/jedis
     implementation("redis.clients:jedis:5.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
 
 
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
