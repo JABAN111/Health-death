@@ -3,6 +3,11 @@ import mobile.log.grpc.LogPingResponse
 import mobile.log.grpc.LogRequest
 import mobile.log.grpc.LogServiceGrpcKt
 
+
+/**
+ * Grpc сервис, который имплементирует методы из log.proto.
+ * По сути своей здесь нужен только метод ping, который используется в gateway, чтобы удостовериться в том, что log "живой"
+ */
 class LogService : LogServiceGrpcKt.LogServiceCoroutineImplBase() {
     override suspend fun log(request: LogRequest) : Empty {
         println("Received log request: ${request.message}")
