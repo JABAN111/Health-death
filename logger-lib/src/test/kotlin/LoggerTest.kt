@@ -7,7 +7,7 @@ class LoggerTest {
 
     @Test
     fun info() {
-        val log = Logger.getLogger()
+        val log = Logger.getLogger(host="localhost", port = 6379)
         log.info("service started")
     }
 
