@@ -18,6 +18,12 @@ services:
       SCHEDULE_PORT: "8080"
       TRAIN_PORT: "8080"
       USER_PORT: "8080"
+    depends_on:
+      - diary
+      - log
+      - schedule
+      - train
+      - user
 
   diary:
     build:
@@ -34,6 +40,12 @@ services:
       - "23211:8080"
     environment:
       LOG_PORT: 8080
+      KEYDB_HOST: "keydb"
+      KEYDB_PORT: 6379
+    depends_on:
+      - redis-cli
+    networks:
+      - default
 
   schedule:
     build:
@@ -70,6 +82,8 @@ services:
       interval: 10s
       timeout: 3s
       retries: 3
+    networks:
+      - default
   redis-cli:
     image: redis:8.0-rc1
     container_name: redis-cli

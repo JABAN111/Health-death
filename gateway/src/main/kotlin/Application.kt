@@ -1,6 +1,8 @@
 package mobile
 
+import com.logger.Logger
 import io.ktor.server.application.*
+import io.ktor.server.netty.*
 import io.ktor.util.logging.*
 import mobile.auth.repository.impl.UserRepositoryImpl
 import mobile.auth.service.impl.AuthServiceImpl
@@ -13,11 +15,18 @@ val log = KtorSimpleLogger("mobile.gateway.ApplicationKt")
 
 
 fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+    EngineMain.main(args)
 }
 
 
 fun Application.module() {
+    val loggerHost = environment.config.property("services.log.keydbHost").getString()
+    val loggerPort = environment.config.property("services.log.keydbPort").getString().toInt()
+    val kdbLogger = Logger.getLogger(
+        host = loggerHost,
+        port = loggerPort
+    )
+
     val secret = environment.config.property("jwt.secret").getString()
     val issuer = environment.config.property("jwt.issuer").getString()
     val audience = environment.config.property("jwt.audience").getString()
@@ -32,5 +41,5 @@ fun Application.module() {
 
     configureGrpcClients()
     configureHTTP()
-    configureRouting(secret, issuer, audience, myRealm, authService)
+    configureRouting(secret, issuer, audience, myRealm, authService, kdbLogger)
 }

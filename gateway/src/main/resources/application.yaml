@@ -21,6 +21,9 @@ services:
     log:
         host: "localhost"
         port: 23211
+#        NOTE: for run locally keydbHost: "localhost"
+        keydbHost: "keydb"
+        keydbPort: 6379
     schedule:
         host: "localhost"
         port: 23220
