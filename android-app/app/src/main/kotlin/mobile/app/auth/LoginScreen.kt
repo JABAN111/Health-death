@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Button
@@ -28,14 +29,14 @@ import mobile.app.components.OutlinedPasswordField
 import mobile.app.components.OutlinedTextFieldWithIcon
 import mobile.app.ui.theme.mainGreen
 
-
 @Composable
-fun RegisterScreen(
-    onRegister: () -> Unit,
-    onExistingAccountClicked: () -> Unit,
+fun LoginScreen(
+    onLogin: () -> Unit,
+    onCreateAccountClicked: () -> Unit,
+    onPasswordResetClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = viewModel<RegisterViewModel>()
+    val viewModel = viewModel<LoginViewModel>()
     val uiState = viewModel.uiState.collectAsState().value
     val mContext = LocalContext.current
 
@@ -47,13 +48,13 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Создать аккаунт",
+            text = "Вход",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(top = 32.dp)
         )
 
         Text(
-            text = "Добро пожаловать!",
+            text = "С возвращением!",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth().padding(top = 128.dp)
@@ -75,19 +76,11 @@ fun RegisterScreen(
             isError = uiState.passwordError != null
         )
 
-        OutlinedPasswordField(
-            value = uiState.confirmPassword,
-            onValueChange = viewModel::onConfirmPasswordChanged,
-            label = "Повторите пароль",
-            showPassword = uiState.showPassword,
-            isError = uiState.confirmPasswordError != null
-        )
-
         Button(
             onClick = {
                 val valid = viewModel.validateForm()
                 if (valid.size == 0) {
-                    onRegister()
+                    onLogin()
                 } else {
                     Toast.makeText(
                         mContext,
@@ -97,23 +90,33 @@ fun RegisterScreen(
                 }
             },
             modifier = Modifier
-                .height(126.dp)
-                .padding(0.dp, 64.dp, 0.dp, 0.dp),
+                .height(190.dp)
+                .width(200.dp)
+                .padding(0.dp, 120.dp, 0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(containerColor = mainGreen)
         ) {
             Text(
-                text = "Зарегистрироваться",
+                text = "Войти",
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
         }
 
         TextButton(
-            onClick = onExistingAccountClicked,
-            modifier = Modifier.padding(top = 16.dp)
+            onClick = onPasswordResetClicked,
         ) {
             Text(
-                text = "Уже есть аккаунт",
+                text = "Забыли пароль ?",
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                textDecoration = TextDecoration.Underline
+            )
+        }
+
+        TextButton(
+            onClick = onCreateAccountClicked,
+        ) {
+            Text(
+                text = "Нет аккаунта ?",
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 textDecoration = TextDecoration.Underline
             )

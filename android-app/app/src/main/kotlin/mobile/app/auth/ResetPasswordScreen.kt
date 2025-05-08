@@ -24,18 +24,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import mobile.app.components.OutlinedPasswordField
 import mobile.app.components.OutlinedTextFieldWithIcon
 import mobile.app.ui.theme.mainGreen
 
-
 @Composable
-fun RegisterScreen(
-    onRegister: () -> Unit,
-    onExistingAccountClicked: () -> Unit,
+fun ResetPasswordScreen(
+    onLoginClicked: () -> Unit,
+    onPasswordRecovered: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val viewModel = viewModel<RegisterViewModel>()
+    val viewModel = viewModel<LoginViewModel>()
     val uiState = viewModel.uiState.collectAsState().value
     val mContext = LocalContext.current
 
@@ -47,16 +45,20 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Создать аккаунт",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(top = 32.dp)
-        )
-
-        Text(
-            text = "Добро пожаловать!",
+            text = "Забыли пароль?",
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Left,
-            modifier = Modifier.fillMaxWidth().padding(top = 128.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 128.dp)
+        )
+        Text(
+            text = "Введите email для восстановления",
+            style = MaterialTheme.typography.titleMedium,
+            textAlign = TextAlign.Left,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp)
         )
 
         OutlinedTextFieldWithIcon(
@@ -67,27 +69,11 @@ fun RegisterScreen(
             isError = uiState.emailError != null
         )
 
-        OutlinedPasswordField(
-            value = uiState.password,
-            onValueChange = viewModel::onPasswordChanged,
-            label = "Пароль",
-            showPassword = uiState.showPassword,
-            isError = uiState.passwordError != null
-        )
-
-        OutlinedPasswordField(
-            value = uiState.confirmPassword,
-            onValueChange = viewModel::onConfirmPasswordChanged,
-            label = "Повторите пароль",
-            showPassword = uiState.showPassword,
-            isError = uiState.confirmPasswordError != null
-        )
-
         Button(
             onClick = {
                 val valid = viewModel.validateForm()
                 if (valid.size == 0) {
-                    onRegister()
+                    onPasswordRecovered
                 } else {
                     Toast.makeText(
                         mContext,
@@ -97,23 +83,23 @@ fun RegisterScreen(
                 }
             },
             modifier = Modifier
-                .height(126.dp)
-                .padding(0.dp, 64.dp, 0.dp, 0.dp),
+                .height(220.dp)
+                .padding(0.dp, 150.dp, 0.dp, 0.dp),
             colors = ButtonDefaults.buttonColors(containerColor = mainGreen)
         ) {
             Text(
-                text = "Зарегистрироваться",
+                text = "Восстановить пароль",
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium
             )
         }
 
         TextButton(
-            onClick = onExistingAccountClicked,
+            onClick = onLoginClicked,
             modifier = Modifier.padding(top = 16.dp)
         ) {
             Text(
-                text = "Уже есть аккаунт",
+                text = "Вернуться ко входу",
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 textDecoration = TextDecoration.Underline
             )

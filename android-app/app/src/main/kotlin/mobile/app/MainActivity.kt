@@ -14,7 +14,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import mobile.app.auth.LoginScreen
 import mobile.app.auth.RegisterScreen
+import mobile.app.auth.ResetPasswordScreen
 import mobile.app.ui.theme.HealthdeathTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,8 +44,22 @@ class MainActivity : ComponentActivity() {
 
                         composable(Screen.Register.route) {
                             RegisterScreen(
-                                onRegisterClicked = {},
+                                onRegister = {},
                                 onExistingAccountClicked = { navController.navigateSingleTopTo(Screen.Login.route) })
+                        }
+
+                        composable(Screen.Login.route) {
+                            LoginScreen(
+                                onLogin = {},
+                                onPasswordResetClicked = { navController.navigateSingleTopTo(Screen.PasswordRecover.route) },
+                                onCreateAccountClicked = { navController.navigateSingleTopTo(Screen.Register.route) })
+                        }
+
+                        composable(Screen.PasswordRecover.route) {
+                            ResetPasswordScreen(
+                                onLoginClicked = { navController.navigateSingleTopTo(Screen.Login.route) },
+                                onPasswordRecovered = { navController.navigateSingleTopTo(Screen.Login.route) }
+                            );
                         }
                     }
                 }
