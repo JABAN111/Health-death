@@ -42,7 +42,6 @@ class MainActivity : ComponentActivity() {
                                     Screen.Register.route
                                 )
                             })
-                            OnboardingInfoScreen()
                         }
 
                         composable(Screen.Register.route) {
