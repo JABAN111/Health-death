@@ -17,6 +17,8 @@ import androidx.navigation.compose.rememberNavController
 import mobile.app.auth.LoginScreen
 import mobile.app.auth.RegisterScreen
 import mobile.app.auth.ResetPasswordScreen
+import mobile.app.onboarding.OnboardingInfoScreen
+import mobile.app.onboarding.OnboardingWelcomeScreen
 import mobile.app.ui.theme.HealthdeathTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,17 +42,18 @@ class MainActivity : ComponentActivity() {
                                     Screen.Register.route
                                 )
                             })
+                            OnboardingInfoScreen()
                         }
 
                         composable(Screen.Register.route) {
                             RegisterScreen(
-                                onRegister = {},
+                                onRegister = { /* FIXME: */ navController.navigateSingleTopTo(Screen.Onboarding.route) },
                                 onExistingAccountClicked = { navController.navigateSingleTopTo(Screen.Login.route) })
                         }
 
                         composable(Screen.Login.route) {
                             LoginScreen(
-                                onLogin = {},
+                                onLogin = { /* TODO: */ },
                                 onPasswordResetClicked = { navController.navigateSingleTopTo(Screen.PasswordRecover.route) },
                                 onCreateAccountClicked = { navController.navigateSingleTopTo(Screen.Register.route) })
                         }
@@ -60,6 +63,18 @@ class MainActivity : ComponentActivity() {
                                 onLoginClicked = { navController.navigateSingleTopTo(Screen.Login.route) },
                                 onPasswordRecovered = { navController.navigateSingleTopTo(Screen.Login.route) }
                             );
+                        }
+
+                        composable(Screen.Onboarding.route) {
+                            OnboardingWelcomeScreen({})
+                        }
+
+                        composable(Screen.Onboarding.route) {
+                            OnboardingWelcomeScreen({ navController.navigateSingleTopTo(Screen.OnboardingInfo.route) })
+                        }
+
+                        composable(Screen.OnboardingInfo.route) {
+                            OnboardingInfoScreen()
                         }
                     }
                 }
