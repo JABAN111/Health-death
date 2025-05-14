@@ -6,6 +6,7 @@ enum class Screen(val route: String) {
     Login("login"),
     PasswordRecover("password_recover"),
     Onboarding("onboarding"),
-    OnboardingInfo("onboarding_info"),
+    OnboardingInfoFirst("onboarding_info_1"),
+    OnboardingInfoSecond("onboarding_info_2"),
     Diary("diary")
 }

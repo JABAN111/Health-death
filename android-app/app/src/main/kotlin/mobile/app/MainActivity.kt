@@ -17,7 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import mobile.app.auth.LoginScreen
 import mobile.app.auth.RegisterScreen
 import mobile.app.auth.ResetPasswordScreen
-import mobile.app.onboarding.OnboardingInfoScreen
+import mobile.app.onboarding.OnboardingInfoScreenFirst
 import mobile.app.onboarding.OnboardingWelcomeScreen
 import mobile.app.ui.theme.HealthdeathTheme
 
@@ -37,11 +37,12 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                     ) {
                         composable(Screen.Welcome.route) {
-                            WelcomeScreen(onContinueClicked = {
-                                navController.navigateSingleTopTo(
-                                    Screen.Register.route
-                                )
-                            })
+//                            WelcomeScreen(onContinueClicked = {
+//                                navController.navigateSingleTopTo(
+//                                    Screen.Register.route
+//                                )
+//                            })
+                            OnboardingInfoScreenFirst({})
                         }
 
                         composable(Screen.Register.route) {
@@ -65,15 +66,16 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Screen.Onboarding.route) {
-                            OnboardingWelcomeScreen({})
+                            OnboardingWelcomeScreen({ navController.navigateSingleTopTo(Screen.OnboardingInfoFirst.route) })
                         }
 
-                        composable(Screen.Onboarding.route) {
-                            OnboardingWelcomeScreen({ navController.navigateSingleTopTo(Screen.OnboardingInfo.route) })
+                        composable(Screen.OnboardingInfoFirst.route) {
+                            OnboardingInfoScreenFirst({ navController.navigateSingleTopTo(Screen.OnboardingInfoSecond.route) })
                         }
 
-                        composable(Screen.OnboardingInfo.route) {
-                            OnboardingInfoScreen()
+                        composable(Screen.OnboardingInfoSecond.route) {
+
+
                         }
                     }
                 }

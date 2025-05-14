@@ -15,16 +15,28 @@ class OnboardingInfoViewModel : ViewModel() {
         _uiState.getAndUpdate { it.copy(female = isFemale) }
     }
 
-    fun onHeightChanged(height: Int) {
+    fun onHeightChanged(height: Int?) {
         _uiState.getAndUpdate { it.copy(height = height) }
     }
 
-    fun onWeightChanged(weight: Int) {
+    fun onWeightChanged(weight: Int?) {
         _uiState.getAndUpdate { it.copy(weight = weight) }
     }
 
     fun onBirthdayChanged(day: Int, month: Int, year: Int) {
         _uiState.getAndUpdate { it.copy(birthday = Date(year - 1900, month, day + 1)) }
+    }
+
+    fun onBirthdayChangedRaw(timestamp: Long) {
+        _uiState.getAndUpdate { it.copy(birthday = Date(timestamp)) }
+    }
+
+    fun validateFirstPart(): String? {
+        if (_uiState.value.height == null)
+            return "Вы не указали рост"
+        if (_uiState.value.weight == null)
+            return "Вы не указали вес"
+        return null
     }
 
     fun onTargetChanged(target: DietTarget) {
@@ -54,8 +66,8 @@ class OnboardingInfoViewModel : ViewModel() {
 
 data class OnboardingInfoUiState(
     val female: Boolean = true,
-    val height: Int = 0,
-    val weight: Int = 0,
+    val height: Int? = 0,
+    val weight: Int? = 0,
     val birthday: Date = Date(0L),
     val target: DietTarget = DietTarget.SaveWeight,
     val targetWeight: Int = 0,
