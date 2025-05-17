@@ -3,6 +3,7 @@ plugins {
     id("com.google.protobuf") version "0.9.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("plugin.serialization") version "1.4.21"
+    id("app.cash.sqldelight") version "2.1.0"
     application
 }
 
@@ -27,7 +28,17 @@ tasks.jar {
 }
 
 repositories {
+    google()
     mavenCentral()
+}
+
+
+sqldelight {
+    databases {
+        create("LogDatabase") {
+            packageName.set("log.database")
+        }
+    }
 }
 
 dependencies {
