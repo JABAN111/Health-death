@@ -5,6 +5,9 @@
 # Gateway (проброшенный порт 23200, внутренний 8080)
 export API_ADDRESS="0.0.0.0:23200"
 export GATEWAY_PORT="23200"
+export AUTH_SERVICE_JDBC_URL="jdbc:postgresql://localhost:5444/log"
+export AUTH_SERVICE_DB_USERNAME="user"
+export AUTH_SERVICE_DB_PASSWORD="user"
 
 # Остальные сервисы:
 # authorization: 23210:8080

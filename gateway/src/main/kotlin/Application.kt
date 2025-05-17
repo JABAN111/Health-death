@@ -1,6 +1,9 @@
 package mobile
 
+import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import com.logger.Logger
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.util.logging.*
@@ -13,13 +16,23 @@ import mobile.rest.configureRouting
 
 val log = KtorSimpleLogger("mobile.gateway.ApplicationKt")
 
+fun getPostgresDataSource(jdbcURL: String, username: String, password: String) = HikariDataSource(HikariConfig().apply {
+    this.jdbcUrl = jdbcURL
+    driverClassName = "org.postgresql.Driver"
+    this.username = username
+    this.password = password
+})
 
+fun getDriver(jdbcURL: String, username: String, password: String) =
+    getPostgresDataSource(jdbcURL, username, password).asJdbcDriver()
 fun main(args: Array<String>) {
     EngineMain.main(args)
 }
 
 
 fun Application.module() {
+
+
     val loggerHost = environment.config.property("services.log.keydbHost").getString()
     val loggerPort = environment.config.property("services.log.keydbPort").getString().toInt()
     val kdbLogger = Logger.getLogger(

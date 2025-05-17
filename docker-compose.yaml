@@ -18,6 +18,9 @@ services:
       SCHEDULE_PORT: "8080"
       TRAIN_PORT: "8080"
       USER_PORT: "8080"
+      AUTH_SERVICE_JDBC_URL: "jdbc:postgresql://auth-postgres:5432/auth"
+      AUTH_SERVICE_DB_USERNAME: "user"
+      AUTH_SERVICE_DB_PASSWORD: "user"
     depends_on:
       - diary
       - log
@@ -92,3 +95,11 @@ services:
     entrypoint: [ "tail", "-f", "/dev/null" ]
     networks:
       - default
+  auth-postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "auth"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "user"
+    ports:
+      - "5445:5432"
