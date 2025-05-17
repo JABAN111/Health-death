@@ -1,6 +1,7 @@
 package mobile
 
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
+import database.UserDatabase
 import com.logger.Logger
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -31,8 +32,6 @@ fun main(args: Array<String>) {
 
 
 fun Application.module() {
-
-
     val loggerHost = environment.config.property("services.log.keydbHost").getString()
     val loggerPort = environment.config.property("services.log.keydbPort").getString().toInt()
     val kdbLogger = Logger.getLogger(
@@ -47,8 +46,27 @@ fun Application.module() {
 
     log.info("Starting application")
     log.debug("Debug level is enabled")
-    //TODO: DI можно тут оставить, можно куда-либо вынести. Но идейно тут не мешает
-    val userRepository = UserRepositoryImpl()
+
+    val jdbcURL = System.getenv("AUTH_SERVICE_JDBC_URL")
+    val dbUsername = System.getenv("AUTH_SERVICE_DB_USERNAME")
+    val dbPassword = System.getenv("AUTH_SERVICE_DB_PASSWORD")
+    if (jdbcURL.isNullOrEmpty() || dbUsername.isNullOrEmpty() || dbPassword.isNullOrEmpty()) {
+        throw RuntimeException("Env AUTH_SERVICE_JDBC_URL: $jdbcURL or AUTH_SERVICE_DB_USERNAME: $dbUsername or AUTH_SERVICE_DB_PASSWORD: $dbPassword not specified")
+    }
+
+    val driver = getDriver(jdbcURL = jdbcURL, username = dbUsername, password = dbPassword)
+
+    UserDatabase.Schema.migrate(
+        driver = driver,
+        oldVersion = 0,
+        newVersion = UserDatabase.Schema.version
+    )
+
+    val db = UserDatabase(driver)
+    val queries = db.userQueries
+
+
+    val userRepository = UserRepositoryImpl(queries)
     val userService = UserServiceImpl(userRepository)
     val authService = AuthServiceImpl(secret, issuer, audience, userService)
 

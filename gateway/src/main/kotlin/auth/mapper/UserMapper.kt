@@ -1,5 +1,6 @@
 package mobile.auth.mapper
 
+import migrations.App_user
 import mobile.auth.dto.UserDto
 import mobile.auth.model.User
 
