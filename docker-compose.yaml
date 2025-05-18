@@ -42,6 +42,9 @@ services:
       LOG_PORT: 8080
       KEYDB_HOST: "keydb"
       KEYDB_PORT: 6379
+      LOG_SERVICE_JDBC_URL: "jdbc:postgresql://log-postgres:5432/log"
+      LOG_SERVICE_DB_USERNAME: "user"
+      LOG_SERVICE_DB_PASSWORD: "user"
     depends_on:
       - redis-cli
     networks:
@@ -92,3 +95,11 @@ services:
     entrypoint: [ "tail", "-f", "/dev/null" ]
     networks:
       - default
+  log-postgres:
+    image: postgres:13.3
+    environment:
+        POSTGRES_DB: "log"
+        POSTGRES_USER: "user"
+        POSTGRES_PASSWORD: "user"
+    ports:
+        - "5444:5432"
