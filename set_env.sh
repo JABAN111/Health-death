@@ -21,6 +21,9 @@ export DIARY_PORT="23214"
 # log: 23211:8080
 export LOG_ADDRESS="localhost"
 export LOG_PORT="23211"
+export LOG_SERVICE_JDBC_URL="jdbc:postgresql://localhost:5444/log"
+export LOG_SERVICE_DB_USERNAME="user"
+export LOG_SERVICE_DB_PASSWORD="user"
 
 # schedule: 23220:8080
 export SCHEDULE_ADDRESS="localhost"

@@ -1,4 +1,8 @@
+import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import com.logger.LogType
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
+import database.LogDatabase
 import grpc.LogService
 import io.grpc.Server
 import io.grpc.ServerBuilder
@@ -10,6 +14,17 @@ import logger.repository.LoggerRepositoryImpl
 import logger.service.LoggerService
 import logger.service.LoggerServiceImpl
 import kotlin.system.exitProcess
+
+
+fun getPostgresDataSource(jdbcURL: String, username: String, password: String) = HikariDataSource(HikariConfig().apply {
+    this.jdbcUrl = jdbcURL
+    driverClassName = "org.postgresql.Driver"
+    this.username = username
+    this.password = password
+})
+
+fun getDriver(jdbcURL: String, username: String, password: String) =
+    getPostgresDataSource(jdbcURL, username, password).asJdbcDriver()
 
 
 fun main() {
@@ -34,7 +49,26 @@ fun main() {
 
     val keyDbPort = keyDbPortEnv.toInt()
 
-    val loggerRepository: LoggerRepository = LoggerRepositoryImpl()
+    //todo вынести в константы
+    val jdbcURL = System.getenv("LOG_SERVICE_JDBC_URL")
+    val dbUsername = System.getenv("LOG_SERVICE_DB_USERNAME")
+    val dbPassword = System.getenv("LOG_SERVICE_DB_PASSWORD")
+    if (jdbcURL.isNullOrEmpty() || dbUsername.isNullOrEmpty() || dbPassword.isNullOrEmpty()) {
+        throw RuntimeException("Env LOG_SERVICE_JDBC_URL: $jdbcURL or LOG_SERVICE_DB_USERNAME: $dbUsername or LOG_SERVICE_DB_PASSWORD: $dbPassword not specified")
+    }
+
+    val driver = getDriver(jdbcURL = jdbcURL, username = dbUsername, password = dbPassword)
+
+    LogDatabase.Schema.migrate(
+        driver = driver,
+        oldVersion = 0,
+        newVersion = LogDatabase.Schema.version
+    )
+
+    val db = LogDatabase(driver)
+    val logQueries = db.logQueries
+
+    val loggerRepository: LoggerRepository = LoggerRepositoryImpl(logQueries)
     val loggerService: LoggerService = LoggerServiceImpl(loggerRepository)
 
     for (type in LogType.entries) {

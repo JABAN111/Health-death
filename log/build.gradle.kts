@@ -1,8 +1,11 @@
+import app.cash.sqlite.migrations.Database
+
 plugins {
     kotlin("jvm") version "2.1.0"
     id("com.google.protobuf") version "0.9.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("plugin.serialization") version "1.4.21"
+    id("app.cash.sqldelight") version "2.1.0"
     application
 }
 
@@ -27,10 +30,19 @@ tasks.jar {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
 
+
+
+
 dependencies {
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.postgresql:postgresql:42.6.0")
+
+    implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
+
     implementation(files("../logger-lib/build/libs/loglib-1.jar"))
 
     // https://mvnrepository.com/artifact/redis.clients/jedis
@@ -48,6 +60,17 @@ dependencies {
 
     implementation("com.google.protobuf:protobuf-kotlin:4.30.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
+}
+
+sqldelight {
+    databases {
+        create("LogDatabase") {
+            deriveSchemaFromMigrations.set(true)
+            packageName.set("database")
+            dialect("app.cash.sqldelight:postgresql-dialect:2.0.2")
+            srcDirs("src/main/sqldelight")
+        }
+    }
 }
 
 protobuf {

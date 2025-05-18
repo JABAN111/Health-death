@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS log(
+  id         SERIAL        NOT NULL PRIMARY KEY,
+  log_level  TEXT          NOT NULL,
+  message    TEXT          NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

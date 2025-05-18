@@ -1,12 +1,13 @@
 package logger.repository
 
+import database.LogQueries
 import logger.model.Log
 
-class LoggerRepositoryImpl: LoggerRepository {
-    private val logDb = mutableMapOf<Long, Log>()
+class LoggerRepositoryImpl(
+    private val logQueries: LogQueries
+) : LoggerRepository {
 
     override fun save(log: Log) {
-        logDb[log.id] = log
-        println("звуки эмуляции бд: $log")
+        logQueries.insertLog(log_level = log.logLevel, message = log.message)
     }
 }
