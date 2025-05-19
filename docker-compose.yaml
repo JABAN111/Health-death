@@ -1,7 +1,7 @@
 services:
   gateway:
     build:
-      dockerfile: Dockerfile.gateway
+      dockerfile: gateway.Dockerfile
     ports:
       - "23200:8080"
     environment:
@@ -30,7 +30,7 @@ services:
 
   diary:
     build:
-      dockerfile: Dockerfile.diary
+      dockerfile: diary.Dockerfile
     ports:
       - "23214:8080"
     environment:
@@ -38,7 +38,7 @@ services:
 
   log:
     build:
-      dockerfile: Dockerfile.log
+      dockerfile: log.Dockerfile
     ports:
       - "23211:8080"
     environment:
@@ -55,7 +55,7 @@ services:
 
   schedule:
     build:
-      dockerfile: Dockerfile.schedule
+      dockerfile: schedule.Dockerfile
     ports:
       - "23220:8080"
     environment:
@@ -63,14 +63,14 @@ services:
 
   train:
     build:
-      dockerfile: Dockerfile.train
+      dockerfile: train.Dockerfile
     ports:
       - "23212:8080"
     environment:
       TRAIN_PORT: 8080
   user:
     build:
-      dockerfile: Dockerfile.user
+      dockerfile: user.Dockerfile
     ports:
       - "23213:8080"
     environment:
