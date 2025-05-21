@@ -1,11 +1,17 @@
+FROM gradle:8.4-jdk17 AS build-libs
+WORKDIR /libs
+
+COPY logger-lib logger-lib
+# test requeire connection to db -> skip them
+RUN cd logger-lib \
+    && gradle build -x test \
+    && cp build/libs/loglib-1.jar /libs/loglib-1.jar
+
 FROM gradle:8.4-jdk17 AS build
 
 WORKDIR /app
 
-COPY logger-lib /app/logger-lib
-# TODO Очень оооочоень долго идет билд этой либы почему-то. Возможно хочется ее вынести отсюда каким-то образом,
-#    ибо она в каждом контейнере лежит
-RUN cd /app/logger-lib && gradle build -x test
+COPY --from=build-libs /libs /app/libs
 
 COPY ./gateway /app/service
 COPY /proto  /app/proto
