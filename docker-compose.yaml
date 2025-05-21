@@ -99,6 +99,7 @@ services:
     networks:
       - default
 # у докера есть множественный deploy. Можно его использовать
+#  но как вы можете догадаться - мне похуй даже на существование схем в бдшках
   auth-postgres:
     image: postgres:13.3
     environment:
@@ -115,4 +116,12 @@ services:
         POSTGRES_PASSWORD: "user"
     ports:
         - "5444:5432"
+  user-postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "user"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "user"
+    ports:
+      - "5445:5432"
 
