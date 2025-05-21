@@ -33,7 +33,7 @@ repositories {
 dependencies {
 // https://mvnrepository.com/artifact/redis.clients/jedis
     implementation("redis.clients:jedis:5.2.0")
-    implementation(files("../logger-lib/build/libs/loglib-1.jar"))
+    implementation(files("../libs/loglib-1.jar"))
 
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
     implementation("io.grpc:grpc-protobuf:1.71.0")

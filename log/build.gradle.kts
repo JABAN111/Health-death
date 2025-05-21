@@ -43,7 +43,7 @@ dependencies {
 
     implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
 
-    implementation(files("../logger-lib/build/libs/loglib-1.jar"))
+    implementation(files("../libs/loglib-1.jar"))
 
     // https://mvnrepository.com/artifact/redis.clients/jedis
     implementation("redis.clients:jedis:5.2.0")
