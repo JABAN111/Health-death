@@ -44,7 +44,6 @@ tasks.jar {
 dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.postgresql:postgresql:42.6.0")
-
     implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
 
     // https://mvnrepository.com/artifact/redis.clients/jedis

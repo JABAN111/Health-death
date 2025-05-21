@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.1.0"
     id("com.google.protobuf") version "0.9.4"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("app.cash.sqldelight") version "2.1.0"
     application
 }
 
@@ -29,6 +30,10 @@ repositories {
 }
 
 dependencies {
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("org.postgresql:postgresql:42.7.2")
+    implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
+
 // https://mvnrepository.com/artifact/redis.clients/jedis
     implementation("redis.clients:jedis:5.2.0")
     implementation(files("../logger-lib/build/libs/loglib-1.jar"))
@@ -66,6 +71,17 @@ protobuf {
                 create("grpc")
                 create("grpckt")
             }
+        }
+    }
+}
+
+sqldelight {
+    databases {
+        create("UserAttrDatabase") {
+            deriveSchemaFromMigrations.set(true)
+            packageName.set("database")
+            dialect("app.cash.sqldelight:postgresql-dialect:2.0.2")
+            srcDirs("src/main/sqldelight")
         }
     }
 }

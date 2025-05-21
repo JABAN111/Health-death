@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS body_parameters_goal (
+    id SERIAL NOT NULL PRIMARY KEY,
+    user_id NOT NULL,
+    weight INT NOT NULL,
+    chest INT NOT NULL,
+    waist INT NOT NULL,
+    shoulders INT NOT NULL,
+    hips INT NOT NULL,
+--     diet_type TEXT NOT NULL,
+--     diet_strategy TEXT, -- if null -> custom
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP -- сюда бы тригер создать
+);
+
+CREATE TABLE IF NOT EXIST body_parameters (
+    id SERIAL NOT NULL PRIMARY KEY,
+    user_id NOT NULL,
+    gender TEXT NOT NULL,
+    chest INT NOT NULL,
+    height INT NOT NULL,
+    weight INT NOT NULL,
+    shoulders INT,
+    hips INT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    image_url_s3 TEXT,
+)
