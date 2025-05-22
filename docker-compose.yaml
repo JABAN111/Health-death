@@ -74,7 +74,10 @@ services:
     ports:
       - "23213:8080"
     environment:
+      USER_SERVICE_JDBC_URL: "jdbc:postgresql://user-postgres:5432/user"
       USER_PORT: 8080
+    depends_on:
+      - user-postgres
   keydb:
 #    TODO у keydb какое-то конченное версионирование, но надо бы уточнить версию тут
     image: eqalpha/keydb:latest
@@ -100,6 +103,14 @@ services:
       - default
 # у докера есть множественный deploy. Можно его использовать
 #  но как вы можете догадаться - мне похуй даже на существование схем в бдшках
+  log-postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "log"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "user"
+    ports:
+      - "5444:5432"
   auth-postgres:
     image: postgres:13.3
     environment:
@@ -108,14 +119,6 @@ services:
       POSTGRES_PASSWORD: "user"
     ports:
       - "5445:5432"
-  log-postgres:
-    image: postgres:13.3
-    environment:
-        POSTGRES_DB: "log"
-        POSTGRES_USER: "user"
-        POSTGRES_PASSWORD: "user"
-    ports:
-        - "5444:5432"
   user-postgres:
     image: postgres:13.3
     environment:
@@ -123,5 +126,5 @@ services:
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "user"
     ports:
-      - "5445:5432"
+      - "5446:5432"
 

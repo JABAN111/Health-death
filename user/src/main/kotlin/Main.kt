@@ -3,7 +3,7 @@ package mobile.train
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import getDriver
+import database.UserAttrDatabase
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.protobuf.services.ProtoReflectionServiceV1
@@ -22,8 +22,6 @@ fun getDriver(jdbcURL: String, username: String, password: String) =
 
 
 fun main() {
-
-
     val portEnv = System.getenv("USER_PORT")
     if (portEnv.isNullOrEmpty()) {
         println("Port is required")
@@ -32,15 +30,23 @@ fun main() {
     val port = portEnv.toInt()
 
     val jdbcURL = System.getenv("USER_SERVICE_JDBC_URL")
-    val dbUsername = System.getenv("USER_SERVICE_DB_USERNAME")
-    val dbPassword = System.getenv("USER_SERVICE_DB_PASSWORD")
-    if (jdbcURL.isNullOrEmpty() || dbUsername.isNullOrEmpty() || dbPassword.isNullOrEmpty()) {
-        throw RuntimeException("Env USER_SERVICE_JDBC_URL: $jdbcURL or USER_SERVICE_DB_USERNAME: $dbUsername or USER_SERVICE_DB_PASSWORD: $dbPassword not specified")
+    val dbUsername = "user"
+    val dbPassword = "user"
+    if (jdbcURL.isNullOrEmpty()){
+        throw RuntimeException("Env USER_SERVICE_JDBC_URL: $jdbcURL")
     }
 
-    val driver = getDriver(jdbcURL = jdbcURL, username = dbUsername, password = dbPassword)
+    val driver = getDriver(
+        jdbcURL = jdbcURL,
+        username = dbUsername ,
+        password = dbPassword
+    )
 
-
+    UserAttrDatabase.Schema.migrate(
+        driver = driver,
+        oldVersion = 0,
+        newVersion = UserAttrDatabase.Schema.version
+    )
 
 
     val server: Server = ServerBuilder

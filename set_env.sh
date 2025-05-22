@@ -36,6 +36,7 @@ export TRAIN_PORT="23212"
 # user: 23213:8080
 export USER_ADDRESS="localhost"
 export USER_PORT="23213"
+export USER_SERVICE_JDBC_URL="jdbc:postgresql://localhost:5446/user"
 
 echo "Local environment variables set:"
 echo "API_ADDRESS=${API_ADDRESS}"
