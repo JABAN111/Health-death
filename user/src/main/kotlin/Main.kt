@@ -1,9 +1,8 @@
-package mobile.train
-
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import database.UserAttrDatabase
+import grpc.TrainService
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.protobuf.services.ProtoReflectionServiceV1
@@ -32,13 +31,13 @@ fun main() {
     val jdbcURL = System.getenv("USER_SERVICE_JDBC_URL")
     val dbUsername = "user"
     val dbPassword = "user"
-    if (jdbcURL.isNullOrEmpty()){
+    if (jdbcURL.isNullOrEmpty()) {
         throw RuntimeException("Env USER_SERVICE_JDBC_URL: $jdbcURL")
     }
 
     val driver = getDriver(
         jdbcURL = jdbcURL,
-        username = dbUsername ,
+        username = dbUsername,
         password = dbPassword
     )
     println("starting migration for url $jdbcURL")

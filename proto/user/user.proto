@@ -12,6 +12,10 @@ message UserPingResponse {
   string message = 1;
 }
 
+message UserData {
+  string user_id = 1;
+}
+
 message OnBoardingData {
   string sex = 1;
   int32 height = 2;
@@ -31,10 +35,14 @@ message OnBoardingResponse {
   string message = 1;
 }
 
+message PushOnboardingRequest {
+  UserData user = 1;
+  OnBoardingData data = 2;
+}
 // Service
 service UserService {
   rpc Ping(google.protobuf.Empty) returns (UserPingResponse) {}
   rpc Test(UserPingResponse) returns (UserPingResponse) {}
 
-  rpc PushOnboardingData(OnBoardingData) returns (OnBoardingResponse);
+  rpc PushOnboardingData(PushOnboardingRequest) returns (OnBoardingResponse);
 }

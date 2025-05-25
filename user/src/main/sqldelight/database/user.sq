@@ -1,0 +1,34 @@
+-- 1) Вставка пользователя
+insertUser:
+INSERT INTO user_user(
+  auth_id, sex, birthday, diet_type,
+  breakfast_time, lunch_time, dinner_time
+) VALUES (
+  :authId, :sex, :birthday, :dietType,
+  :breakfastTime, :lunchTime, :dinnerTime
+);
+
+-- 2) Вставка тренировочных целей
+insertTrainGoals:
+INSERT INTO train_goals(
+  user_user_id, trains_per_week
+) VALUES (
+  :userId, :trainsPerWeek
+);
+
+-- 3) Вставка цели по параметрам тела
+-- (теперь chest/waist/shoulders/hips не обязательны)
+insertBodyGoal:
+INSERT INTO body_parameters_goal(
+  user_user_id, goal, weight
+) VALUES (
+  :userId, :target, :targetWeight
+);
+
+-- 4) Вставка текущих параметров тела
+insertBodyCurrent:
+INSERT INTO body_parameters_current(
+  user_user_id, height, weight
+) VALUES (
+  :userId, :height, :weight
+);

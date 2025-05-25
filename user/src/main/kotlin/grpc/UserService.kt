@@ -1,11 +1,17 @@
-package mobile.train
+package grpc
 
 import com.google.protobuf.Empty
+import mobile.user.grpc.OnBoardingData
+import mobile.user.grpc.OnBoardingResponse
+import mobile.user.grpc.PushOnboardingRequest
 import mobile.user.grpc.UserPingResponse
 import mobile.user.grpc.UserServiceGrpcKt
+import service.OnBoardingService
 
 
-class TrainService : UserServiceGrpcKt.UserServiceCoroutineImplBase(){
+class UserService(
+    private val onBoardingService: OnBoardingService
+) : UserServiceGrpcKt.UserServiceCoroutineImplBase(){
     override suspend fun ping(request: Empty): UserPingResponse {
         return UserPingResponse.newBuilder()
             .setMessage("Pong")
@@ -17,6 +23,12 @@ class TrainService : UserServiceGrpcKt.UserServiceCoroutineImplBase(){
         return UserPingResponse.newBuilder()
             .setMessage("Test")
             .build()
+    }
+
+    override suspend fun pushOnboardingData(request: PushOnboardingRequest): OnBoardingResponse {
+        val userId: String = request.user.userId
+
+        return super.pushOnboardingData(request)
     }
 }
 

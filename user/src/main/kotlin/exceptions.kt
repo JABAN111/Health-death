@@ -1,0 +1,1 @@
+class UpdateFailException(message: String) : RuntimeException(message)
