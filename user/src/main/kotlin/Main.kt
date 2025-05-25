@@ -2,11 +2,14 @@ import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import database.UserAttrDatabase
-import grpc.TrainService
+import database.UserQueries
+import grpc.UserService
 import io.grpc.Server
 import io.grpc.ServerBuilder
 import io.grpc.protobuf.services.ProtoReflectionServiceV1
 import kotlinx.coroutines.runBlocking
+import repository.UserUserRepository
+import repository.impl.UserUserRepositoryImpl
 import kotlin.system.exitProcess
 
 fun getPostgresDataSource(jdbcURL: String, username: String, password: String) = HikariDataSource(HikariConfig().apply {
@@ -48,10 +51,15 @@ fun main() {
     )
     println("finishing migration")
 
+    val db = UserAttrDatabase(driver)
+    val queries = db.userQueries
+    val userRepository = UserUserRepositoryImpl(queries)
+
+
 
     val server: Server = ServerBuilder
         .forPort(port)
-        .addService(TrainService())
+//        .addService(UserService())
         .addService(ProtoReflectionServiceV1.newInstance())
         .build()
         .start()

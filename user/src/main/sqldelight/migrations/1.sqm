@@ -1,24 +1,24 @@
 CREATE TABLE IF NOT EXISTS user_user (
     id             SERIAL    PRIMARY KEY,
-    auth_id        BIGINT    NOT NULL,                       -- ид пользователя из авторизационной БД(передается по grpc)
+    auth_id        INT    NOT NULL,                       -- ид пользователя из авторизационной БД(передается по grpc)
     sex         TEXT      NOT NULL,                       -- 'male' или 'female'( да я в курсе про енумы в постгре, мне похуй)
-    birthday       DATE,
+    birthday       TIMESTAMP,
     diet_type      TEXT,
-    breakfast_time TIME,                                      -- nullable, если diet_type не указан
-    lunch_time     TIME,
-    dinner_time    TIME
+    breakfast_time TIMESTAMP,                                      -- nullable, если diet_type не указан
+    lunch_time     TIMESTAMP,
+    dinner_time    TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS train_goals (
     id             SERIAL PRIMARY KEY,
-    user_user_id   BIGINT NOT NULL,
+    user_user_id   INT NOT NULL,
     trains_per_week INT    NOT NULL,
     FOREIGN KEY (user_user_id) REFERENCES user_user(id)
 );
 
 CREATE TABLE IF NOT EXISTS body_parameters_goal (
     id             SERIAL    PRIMARY KEY,
-    user_user_id   BIGINT    NOT NULL,
+    user_user_id   INT    NOT NULL,
     goal           TEXT      NOT NULL,                       -- например: 'ПОДДЕРЖАТЬ ВЕС', 'ПОХУДЕТЬ', 'НАБРАТЬ ВЕС'
     user_id        TEXT      NOT NULL,
     weight         INT       NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS body_parameters_goal (
 
 CREATE TABLE IF NOT EXISTS body_parameters_current (
     id             SERIAL    PRIMARY KEY,
-    user_user_id   BIGINT    NOT NULL,
+    user_user_id   INT    NOT NULL,
     chest          INT       NOT NULL,
     height         INT       NOT NULL,
     weight         INT       NOT NULL,

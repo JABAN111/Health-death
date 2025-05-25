@@ -2,8 +2,9 @@ package mapper
 
 import mobile.user.grpc.PushOnboardingRequest
 import model.OnBoardingInfo
-import java.sql.Timestamp as SqlTimestamp
 import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import com.google.protobuf.Timestamp as GrpcTimestamp
 
 /**
@@ -12,23 +13,24 @@ import com.google.protobuf.Timestamp as GrpcTimestamp
 fun PushOnboardingRequest.toModel(): OnBoardingInfo {
     val d = this.data
 
-    fun GrpcTimestamp.toSqlTimestamp(): SqlTimestamp =
-        SqlTimestamp.from(
-            Instant.ofEpochSecond(this.seconds, this.nanos.toLong())
+    fun GrpcTimestamp.toLocalDateTime(): LocalDateTime =
+        LocalDateTime.ofInstant(
+            Instant.ofEpochSecond(this.seconds, this.nanos.toLong()),
+            ZoneOffset.UTC
         )
 
     return OnBoardingInfo(
         sex = d.sex,
         height = d.height.takeIf { it != 0 },
         weight = d.weight.takeIf { it != 0 },
-        dateOfBirthday = d.dateOfBirthday.toSqlTimestamp(),
+        dateOfBirthday = d.dateOfBirthday.toLocalDateTime(),
         target = d.target.takeIf { it.isNotBlank() },
         targetWeight = d.targetWeight.takeIf { it != 0 },
         trainsPerWeek = d.trainsPerWeek.takeIf { it != 0 },
-        deadlineDate = d.deadlineDate.toSqlTimestamp(),
+        deadlineDate = d.deadlineDate.toLocalDateTime(),
         dietType = d.dietType.takeIf { it.isNotBlank() },
-        breakfastTime = d.breakfastTime.toSqlTimestamp(),
-        lunchTime = d.lunchTime.toSqlTimestamp(),
-        dinnerTime = d.dinnerTime.toSqlTimestamp()
+        breakfastTime = d.breakfastTime.toLocalDateTime(),
+        lunchTime = d.lunchTime.toLocalDateTime(),
+        dinnerTime = d.dinnerTime.toLocalDateTime()
     )
 }
