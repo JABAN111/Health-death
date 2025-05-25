@@ -41,12 +41,13 @@ fun main() {
         username = dbUsername ,
         password = dbPassword
     )
-
+    println("starting migration for url $jdbcURL")
     UserAttrDatabase.Schema.migrate(
         driver = driver,
         oldVersion = 0,
         newVersion = UserAttrDatabase.Schema.version
     )
+    println("finishing migration")
 
 
     val server: Server = ServerBuilder
