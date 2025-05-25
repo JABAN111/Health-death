@@ -1,6 +1,7 @@
 package grpc
 
 import com.google.protobuf.Empty
+import mapper.toModel
 import mobile.user.grpc.OnBoardingData
 import mobile.user.grpc.OnBoardingResponse
 import mobile.user.grpc.PushOnboardingRequest
@@ -27,8 +28,9 @@ class UserService(
 
     override suspend fun pushOnboardingData(request: PushOnboardingRequest): OnBoardingResponse {
         val userId: String = request.user.userId
-
-        return super.pushOnboardingData(request)
+        val onBoardingData = request.toModel()
+        onBoardingService.create(userId, onBoardingData)
+        return super.pushOnboardingData(request)//TODO
     }
 }
 
