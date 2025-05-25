@@ -3,6 +3,7 @@ syntax = "proto3";
 package search;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 option java_package = "mobile.user.grpc";
 option java_multiple_files = true;
@@ -11,9 +12,29 @@ message UserPingResponse {
   string message = 1;
 }
 
+message OnBoardingData {
+  string sex = 1;
+  int32 height = 2;
+  int32 weight = 3;
+  google.protobuf.Timestamp date_of_birthday = 4;
+  string target = 5;
+  int32 target_weight = 6;
+  int32 trains_per_week = 7;
+  google.protobuf.Timestamp deadline_date = 8;
+  string diet_type = 9;
+  google.protobuf.Timestamp breakfast_time = 10;
+  google.protobuf.Timestamp lunch_time = 11;
+  google.protobuf.Timestamp dinner_time = 12;
+}
+
+message OnBoardingResponse {
+  string message = 1;
+}
 
 // Service
 service UserService {
   rpc Ping(google.protobuf.Empty) returns (UserPingResponse) {}
   rpc Test(UserPingResponse) returns (UserPingResponse) {}
+
+  rpc PushOnboardingData(OnBoardingData) returns (OnBoardingResponse);
 }

@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS user_user (
     id             SERIAL    PRIMARY KEY,
     auth_id        BIGINT    NOT NULL,                       -- ид пользователя из авторизационной БД(передается по grpc)
-    gender         TEXT      NOT NULL,                       -- 'male' или 'female'( да я в курсе про енумы в постгре, мне похуй)
+    sex         TEXT      NOT NULL,                       -- 'male' или 'female'( да я в курсе про енумы в постгре, мне похуй)
     birthday       DATE,
     diet_type      TEXT,
     breakfast_time TIME,                                      -- nullable, если diet_type не указан
