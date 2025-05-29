@@ -18,6 +18,7 @@ import mobile.app.auth.LoginScreen
 import mobile.app.auth.RegisterScreen
 import mobile.app.auth.ResetPasswordScreen
 import mobile.app.onboarding.OnboardingInfoScreenFirst
+import mobile.app.onboarding.OnboardingInfoScreenSecond
 import mobile.app.onboarding.OnboardingWelcomeScreen
 import mobile.app.ui.theme.HealthdeathTheme
 
@@ -37,12 +38,11 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                     ) {
                         composable(Screen.Welcome.route) {
-//                            WelcomeScreen(onContinueClicked = {
-//                                navController.navigateSingleTopTo(
-//                                    Screen.Register.route
-//                                )
-//                            })
-                            OnboardingInfoScreenFirst({})
+                            WelcomeScreen(onContinueClicked = {
+                                navController.navigateSingleTopTo(
+                                    Screen.Register.route
+                                )
+                            })
                         }
 
                         composable(Screen.Register.route) {
@@ -74,8 +74,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(Screen.OnboardingInfoSecond.route) {
-
-
+                            OnboardingInfoScreenSecond({ /* TODO: */ })
                         }
                     }
                 }

@@ -43,11 +43,11 @@ class OnboardingInfoViewModel : ViewModel() {
         _uiState.getAndUpdate { it.copy(target = target) }
     }
 
-    fun onTargetWeightChanged(targetWeight: Int) {
+    fun onTargetWeightChanged(targetWeight: Int?) {
         _uiState.getAndUpdate { it.copy(targetWeight = targetWeight) }
     }
 
-    fun onTrainingsPerWeekChanged(trainingsPerWeek: Int) {
+    fun onTrainingsPerWeekChanged(trainingsPerWeek: Int?) {
         _uiState.getAndUpdate { it.copy(trainingsPerWeek = trainingsPerWeek) }
     }
 
@@ -55,12 +55,28 @@ class OnboardingInfoViewModel : ViewModel() {
         _uiState.getAndUpdate { it.copy(targetDeadline = Date(year - 1900, month, day + 1)) }
     }
 
+    fun onTargetDeadlineChangedRaw(time: Long) {
+        _uiState.getAndUpdate { it.copy(targetDeadline = Date(time)) }
+    }
+
     fun onDietaryPatternChanged(pattern: String) {
         _uiState.getAndUpdate { it.copy(dietaryPattern = pattern) }
     }
 
-    fun onDietaryScheduleChanged(breakfast: Int, lunch: Int, dinner: Int) {
-        _uiState.getAndUpdate { it.copy(dietarySchedule = DietSchedule(breakfast, lunch, dinner)) }
+    fun onDietaryScheduleChanged(dietSchedule: DietSchedule) {
+        _uiState.getAndUpdate { it.copy(dietarySchedule = dietSchedule) }
+    }
+
+    fun validateSecondPart(): String? {
+        if (_uiState.value.target == DietTarget.SaveWeight && _uiState.value.targetWeight == null)
+            return "Вы не указали цель веса"
+        if (_uiState.value.trainingsPerWeek == null)
+            return "Вы не указали количество тренировок в неделю"
+        if (_uiState.value.targetDeadline == Date(0L))
+            return "Вы не указали дату окончания цели"
+        if (_uiState.value.dietaryPattern == "")
+            return "Вы не указали тип питания"
+        return null
     }
 }
 
@@ -70,20 +86,20 @@ data class OnboardingInfoUiState(
     val weight: Int? = 0,
     val birthday: Date = Date(0L),
     val target: DietTarget = DietTarget.SaveWeight,
-    val targetWeight: Int = 0,
-    val trainingsPerWeek: Int = 0,
+    val targetWeight: Int? = 0,
+    val trainingsPerWeek: Int? = null,
     val targetDeadline: Date = Date(0L),
     val dietaryPattern: String = "",
     val dietarySchedule: DietSchedule = DietSchedule(0, 0,0),
 )
 
-public enum class DietTarget(title: String) {
+public enum class DietTarget(val title: String) {
     SaveWeight("Поддержать вес"),
     LoseWeight("Похудеть"),
     GetWeight("Набрать вес")
 }
 
-public enum class DietPattern(title: String) {
+public enum class DietPattern(val title: String) {
     Classic("Классический"),
     Vegetarian("Вегетарианство"),
     Vegan("Веганство"),
@@ -91,3 +107,9 @@ public enum class DietPattern(title: String) {
 }
 
 public data class DietSchedule(val breakfast: Int, val lunch: Int, val dinner: Int)
+public data class NamedDietSchedule(val name: String, val schedule: DietSchedule)
+
+
+val larkSchedule = NamedDietSchedule("Жаворонок", DietSchedule(7 * 60, 13 * 60, 19 * 60))
+val normalSchedule = NamedDietSchedule("Обычный", DietSchedule(8 * 60, 12 * 60, 18 * 60))
+val owlSchedule = NamedDietSchedule("Сова", DietSchedule(9 * 60, 14 * 60, 20 * 60))
