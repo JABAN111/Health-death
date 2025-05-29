@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
 
                         composable(Screen.Login.route) {
                             LoginScreen(
-                                onLogin = { /* TODO: */ },
+                                onLogin = { /* FIXME: */ navController.navigateSingleTopTo(Screen.Onboarding.route) },
                                 onPasswordResetClicked = { navController.navigateSingleTopTo(Screen.PasswordRecover.route) },
                                 onCreateAccountClicked = { navController.navigateSingleTopTo(Screen.Register.route) })
                         }
