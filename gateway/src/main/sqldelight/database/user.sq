@@ -1,0 +1,6 @@
+getByEmail:
+SELECT * FROM app_user WHERE email = ?;
+
+insertUser:
+INSERT INTO app_user (email, password)
+VALUES (?, ?);

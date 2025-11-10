@@ -1,0 +1,35 @@
+ktor:
+    development: true
+    application:
+        modules:
+            - mobile.ApplicationKt.module
+    deployment:
+        port: 8080
+
+jwt:
+    secret: "secret"
+    issuer: "gateway"
+    audience: "aud"
+    realm: "death"
+services:
+    diary:
+        host: "localhost"
+        port: 23214
+    authorization:
+        host: "localhost"
+        port: 23210
+    log:
+        host: "localhost"
+        port: 23211
+#        NOTE: for run locally keydbHost: "localhost"
+        keydbHost: "keydb"
+        keydbPort: 6379
+    schedule:
+        host: "localhost"
+        port: 23220
+    train:
+        host: "localhost"
+        port: 23212
+    user:
+        host: "localhost"
+        port: 23213

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package search;
+
+import "google/protobuf/empty.proto";
+
+option java_package = "mobile.log.grpc";
+option java_multiple_files = true;
+
+message LogPingResponse {
+  string message = 1;
+}
+
+message LogRequest{
+  string message = 1;
+}
+
+// Service
+service LogService {
+  rpc Ping(google.protobuf.Empty) returns (LogPingResponse) {}
+
+  //будущая ручка для логирования, можно переписать
+  rpc Log(LogRequest) returns (google.protobuf.Empty) {}
+}
